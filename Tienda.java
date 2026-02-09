@@ -12,24 +12,17 @@ import java.util.Scanner;
  * - Mejorar la gestión de logs (Patrón Singleton).
  */
 public class Tienda {
-
-    public static ArrayList<String> n = new ArrayList<>(); // Nombres
-    public static ArrayList<Double> p = new ArrayList<>(); // Precios
-    public static ArrayList<Integer> s = new ArrayList<>(); // Stock
-    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
+        ArrayList<TiendaVerdadera> tiendas = new ArrayList<>();
         // Datos de prueba iniciales
-        n.add("Camiseta");
-        p.add(15.0);
-        s.add(10);
-        n.add("Pantalón");
-        p.add(30.0);
-        s.add(5);
-        n.add("Zapatos");
-        p.add(45.0);
-        s.add(2);
+
+        TiendaVerdadera n = new TiendaVerdadera("Camiseta", 15.0, 10),
+        p = new TiendaVerdadera("Pantalon", 30.0, 5),
+        s = new TiendaVerdadera("Zapatos", 45.0, 2);
+        tiendas.add(n);
+        tiendas.add(p);
+        tiendas.add(s);
         
         while(true) {
             int op;
@@ -52,18 +45,17 @@ public class Tienda {
                 System.out.print("Stock inicial: ");
                 int stock = sc.nextInt();
                 
-                n.add(nombre);
-                p.add(precio);
-                s.add(stock);
+                TiendaVerdadera tienda = new TiendaVerdadera(nombre, precio, stock);
+                tiendas.add(tienda);
                 System.out.println("Producto añadido correctamente.");
                 
             } else if(op == 2) {
                 System.out.println("\n--- INVENTARIO ACTUAL ---");
-                if(n.isEmpty()) {
+                if(tiendas.isEmpty()) {
                     System.out.println("No hay productos.");
                 } else {
-                    for(int i=0; i<n.size(); i++) {
-                        System.out.println(i + ". " + n.get(i) + " - " + p.get(i) + "€ - Stock: " + s.get(i));
+                    for(int i=0; i<tiendas.size(); i++) {
+                        System.out.println(i + ". " + tiendas.get(i).getNombre() + " - " + tiendas.get(i).getPrecio() + "€ - Stock: " + tiendas.get(i).getStock());
                     }
                 }
                 
@@ -73,21 +65,21 @@ public class Tienda {
                 String prod = sc.next();
                 
                 int pos = -1;
-                for(int i=0; i<n.size(); i++) {
-                    if(n.get(i).equalsIgnoreCase(prod)) {
+                for(int i=0; i<tiendas.size(); i++) {
+                    if(tiendas.get(i).getNombre().equalsIgnoreCase(prod)) {
                         pos = i;
                         break;
                     }
                 }
                 
                 if(pos != -1) {
-                    System.out.println("Producto encontrado: " + n.get(pos));
-                    System.out.println("Precio: " + p.get(pos) + "€ | Stock: " + s.get(pos));
+                    System.out.println("Producto encontrado: " + tiendas.get(pos).getNombre());
+                    System.out.println("Precio: " + tiendas.get(pos).getPrecio() + "€ | Stock: " + tiendas.get(pos).getStock());
                     System.out.print("Cantidad a comprar: ");
                     int cant = sc.nextInt();
                     
-                    if(s.get(pos) >= cant) {
-                        double total = cant * p.get(pos);
+                    if(tiendas.get(pos).getStock() >= cant) {
+                        double total = cant * tiendas.get(pos).getPrecio();
                         
                         // Hay números fijos que se utilizan en el código
                         if(total > 50) {
@@ -95,13 +87,13 @@ public class Tienda {
                             total = total * 0.90; 
                         }
                         
-                        s.set(pos, s.get(pos) - cant); // Actualizar stock
+                        tiendas.get(pos).setStock(tiendas.get(pos).getStock() - cant); // Actualizar stock
                         System.out.println("Venta realizada. Total a pagar: " + total + "€");
                         
                         // Debería ser Singleton
-                        System.out.println("[LOG SYSTEM]: Venta de " + cant + "x " + n.get(pos) + " registrada.");
-                        if(s.get(pos) < 3) {
-                            System.out.println("[LOG SYSTEM]: ALERTA DE STOCK BAJO para " + n.get(pos));
+                        System.out.println("[LOG SYSTEM]: Venta de " + cant + "x " + tiendas.get(pos).getNombre() + " registrada.");
+                        if(tiendas.get(pos).getStock() < 3) {
+                            System.out.println("[LOG SYSTEM]: ALERTA DE STOCK BAJO para " + tiendas.get(pos).getNombre());
                         }
                         
                     } else {
