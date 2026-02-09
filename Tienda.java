@@ -16,6 +16,7 @@ public class Tienda {
         Scanner sc = new Scanner(System.in);
         ArrayList<TiendaVerdadera> tiendas = new ArrayList<>();
         boolean func = true;
+        double precioDescuento = 50.0;
 
         // Datos de prueba iniciales
 
@@ -84,7 +85,7 @@ public class Tienda {
                                 double total = cant * tiendas.get(pos).getPrecio();
                         
                                 // Hay números fijos que se utilizan en el código
-                                if(total > 50) {
+                                if(total > precioDescuento) {
                                     System.out.println("¡Oferta! Descuento aplicado por compra superior a 50€");
                                     total = total * 0.90; 
                                 }
@@ -113,22 +114,6 @@ public class Tienda {
                         System.out.println("No pongas letras donde no debes");
                         break;
                 }
-                
-            if(op == 1) { 
-                
-                
-            } else if(op == 2) {
-                
-                
-            } else if(op == 3) {
-                
-                
-            } else if(op == 4) {
-                
-                break;
-            } else {
-                System.out.println("Opción no válida.");
-            }
             } catch (InputMismatchException e) {
                 System.out.println("No pongas letras donde no debes");
                 break;
