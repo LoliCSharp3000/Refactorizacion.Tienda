@@ -1,13 +1,28 @@
 import java.util.Scanner;
 
+/**
+ * Clase principal que ejecuta la aplicación de la tienda.
+ * 
+ * Permite al usuario interactuar mediante un menú en consola
+ * para gestionar productos y realizar ventas.
+ */
 public class TiendaApp {
 
+    /**
+     * Método principal de la aplicación.
+     * 
+     * Inicializa el inventario, el servicio de ventas y muestra
+     * un menú interactivo hasta que el usuario decide salir.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados).
+     */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
         Inventario inventario = new Inventario();
         ServicioVenta servicioVenta = new ServicioVenta();
 
+        // Productos iniciales de ejemplo
         inventario.agregarProducto(new Producto("Camiseta", 15.0, 10));
         inventario.agregarProducto(new Producto("Pantalon", 30.0, 5));
         inventario.agregarProducto(new Producto("Zapatos", 45.0, 2));
